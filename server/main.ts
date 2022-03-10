@@ -1,6 +1,6 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { intitialState } from "./dto/stateDto";
+import { intitialState, tileState } from "./dto/stateDto";
 
 const httpServer = createServer();
 httpServer.listen(3001);
@@ -30,6 +30,44 @@ server.on("connection", (socket) => {
             xCoordinates: 0,
             yCoordinates: 0
         })
+    })
+
+    socket.on("key", (value) => {
+        let userState = state.users.filter((user) => { 
+            user.userID == socket.id;
+        }).pop();
+        console.log(socket.id);
+        console.log(userState);
+
+        if(value == 'left'){
+            let newXCoordinate = userState.xCoordinates - 1;
+            if(state.grid[newXCoordinate][userState.yCoordinates] == (tileState.Free ||
+                tileState.Damage)){
+                userState.xCoordinates = newXCoordinate;
+            }
+        } else if(value == 'up'){
+            let newYCoordinate = userState.yCoordinates + 1;
+            if(state.grid[newYCoordinate][userState.yCoordinates] == (tileState.Free ||
+                tileState.Damage)){
+                userState.xCoordinates = newYCoordinate;
+            }
+        } else if(value == 'right'){
+            let newXCoordinate = userState.xCoordinates + 1;
+            if(state.grid[newXCoordinate][userState.yCoordinates] == (tileState.Free ||
+                tileState.Damage)){
+                userState.xCoordinates = newXCoordinate;
+            }       
+        } else if(value == 'down'){
+            let newYCoordinate = userState.yCoordinates - 1;
+            if(state.grid[newYCoordinate][userState.yCoordinates] == (tileState.Free ||
+                tileState.Damage)){
+                userState.xCoordinates = newYCoordinate;
+            }
+        } else if(value == 'space'){
+
+        } else {
+            return 'WUUUTTT'
+        }
     })
 
     // when socket disconnects, remove it from the list:
