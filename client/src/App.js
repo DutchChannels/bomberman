@@ -1,32 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 import { io } from "socket.io-client";
 
 const socket = io("http://localhost:3001");
 
-socket.on("state", (arg) => {
-  console.log(arg);
-})
-
 socket.on("connect", () => {
   console.log('Connected!');
-  console.log(socket.connected); // true
 });
 
 socket.on("disconnect", () => {
   console.log('Disconnected!');
-  console.log(socket.connected); // false
 });
+
+socket.on("state", (arg) => {
+  outerState = arg;
+});
+
+let outerState = {};
 
 
 function App() {
   const [ name, setName ] = useState('');
+  const [ state, setState ] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setName(e.target.name.value);
   };
+
+  useEffect(() => {
+    const idx = setInterval(() => setState(outerState), 100);
+    return () => clearInterval(idx);
+  });
 
   const inner = (() => {
     if (name.length < 1)
@@ -37,7 +43,7 @@ function App() {
         </form>
       );
     else
-      return 'Waiting to start the game';
+      return `${JSON.stringify(state)}`;
   })();
 
   return (
