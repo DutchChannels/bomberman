@@ -1,6 +1,21 @@
 import React, { useState } from 'react';
 import './App.css';
 
+import { io } from "socket.io-client";
+
+const socket = io("wss://localhost:3001");
+
+socket.on("connect", () => {
+  console.log('Connected!');
+  console.log(socket.connected); // true
+});
+
+socket.on("disconnect", () => {
+  console.log('Disconnected!');
+  console.log(socket.connected); // false
+});
+
+
 function App() {
   const [ name, setName ] = useState('');
 
