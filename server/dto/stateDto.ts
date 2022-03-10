@@ -4,25 +4,27 @@ export enum tileState {
     Damage = 3,
     soft = 4
 }
-export const state = {
+
+
+export let intitialState = {
     gameTime: 0,
     timeLeft: 300000, // at start of the game
     users: [
         {
-            userID: 1, // assigned by us
+            userID: "1234", // assigned by us
             userName: 'henk', // provided by sign on
             kills: 0,
             deaths: 0,
-            xCordinates:1, // random assigned by server on sign on
-            yCordinates:1, // random assigned by server on sign on
+            xCoordinates:1, // random assigned by server on sign on
+            yCoordinates:1, // random assigned by server on sign on
         },
         {
-            userID: 2,
+            userID: "12345",
             userName: 'ingrid',
             kills: 0,
             deaths: 0,
-            xCordinates:38,
-            yCordinates:38,
+            xCoordinates:38,
+            yCoordinates:38,
         },
     ],
     grid: [
