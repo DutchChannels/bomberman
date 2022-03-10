@@ -18,6 +18,8 @@ socket.on("state", (arg) => {
   outerState = arg;
 });
 
+let joined = false;
+
 function App() {
   const [ name, setName ] = useState('');
   const [ state, setState ] = useState({});
@@ -27,6 +29,7 @@ function App() {
     setName(e.target.name.value);
 
     socket.emit('join', name);
+    joined = true;
   };
 
   useEffect(() => {
@@ -71,7 +74,7 @@ const setBlock = () => {
   setTimeout(() => { blocked = 0; }, 300);
 }
 setInterval(() => {
-  if (blocked > 0)
+  if (!joined || blocked > 0)
     return;
 
   if (pressed === 37) {
