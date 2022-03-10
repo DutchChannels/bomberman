@@ -1,8 +1,10 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { state } from "./dto/stateDto";
 
 const httpServer = createServer();
 httpServer.listen(3001);
+
 const server = new Server(httpServer, {
   cors: {
     origin: "http://localhost:3000"
@@ -22,6 +24,9 @@ server.on("connection", (socket) => {
         sequenceNumberByClient.delete(socket);
         console.info(`Client gone [id=${socket.id}]`);
     });
+    setInterval(() => {
+        socket.emit("state", state);
+    }, 100);
 });
 
 // sends each client its current sequence number
