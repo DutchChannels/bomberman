@@ -28,7 +28,7 @@ function App() {
     e.preventDefault();
     setName(e.target.name.value);
 
-    socket.emit('join', name);
+    socket.emit('join', e.target.name.value);
     joined = true;
   };
 
