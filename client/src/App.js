@@ -86,7 +86,7 @@ setInterval(() => {
   } else if (pressed === 39) {
     setBlock();
     socket.emit('key', 'right');
-  } else if (pressed === 38) {
+  } else if (pressed === 40) {
     setBlock();
     socket.emit('key', 'down');
   } else if (pressed === 32) {
