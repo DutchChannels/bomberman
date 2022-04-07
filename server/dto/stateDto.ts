@@ -6,7 +6,7 @@ export enum tileState {
 }
 
 
-export let intitialState = {
+export const intitialState = {
     gameTime: 0,
     timeLeft: 300000, // at start of the game
     users: [
